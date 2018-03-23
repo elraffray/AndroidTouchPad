@@ -1,0 +1,7 @@
+#ifndef MOUSEBUTTON_H
+#define MOUSEBUTTON_H
+
+
+enum MouseButton {LEFT=1, MIDDLE, RIGHT, WHUP, WHDOWN, WHLEFT, WHRIGHT, PREV, NEXT};
+
+#endif // MOUSEBUTTON_H
