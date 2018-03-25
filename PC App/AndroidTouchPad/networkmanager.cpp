@@ -1,6 +1,7 @@
 #include "networkmanager.h"
 #include <iostream>
 #include <stdio.h>
+#include <string>
 #include <cstring>
 #include <unistd.h>
 #include <sys/socket.h>
@@ -8,6 +9,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
+#include <vector>
 
 using namespace std;
 
@@ -18,14 +20,12 @@ NetworkManager::NetworkManager()
 
 void NetworkManager::connect()
 {
-
-    if ((childSocket = accept(serverSocket, &clientSocket, &clientNameLength))<0)
+    if ((childSocket = accept(serverSocket, &srcAddr, &srcAddrLength))<0)
     {
         perror("accept");
         close(serverSocket);
         exit(EXIT_FAILURE);
     }
-
 }
 
 void NetworkManager::closeServer()
@@ -33,6 +33,23 @@ void NetworkManager::closeServer()
     close(childSocket);
     close(serverSocket);
 }
+
+string NetworkManager::getData()
+{
+    ret=recv(childSocket, data, DATA_MAX_LENGTH-1,0);
+    if (ret < 0) {
+        return "";
+    }
+    cout << "data is " << ret << " long" << endl;
+    data[ret] = '\0';
+
+    string s(data, ret);
+
+    cout << "received" << s << endl;
+
+    return s;
+}
+
 
 
 void NetworkManager::createServer(int port)
@@ -62,7 +79,7 @@ void NetworkManager::createServer(int port)
         close(serverSocket);
         exit(EXIT_FAILURE);
     }
-    if (listen(serverSocket, 3) < 0)
+    if (listen(serverSocket, 1))
     {
         perror("listen");
         exit(EXIT_FAILURE);

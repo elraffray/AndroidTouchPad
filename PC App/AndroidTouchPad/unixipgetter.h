@@ -1,6 +1,7 @@
 #ifndef UNIXIPGETTER_H
 #define UNIXIPGETTER_H
 
+#include <string>
 #include "ipgetter.h"
 
 
@@ -9,7 +10,7 @@ class UnixIPGetter : public IPGetter
 {
 public:
     UnixIPGetter();
-    char* getLocalIP();
+    std::string *getLocalIP();
 
 private:
     bool isLocal(char *ip);

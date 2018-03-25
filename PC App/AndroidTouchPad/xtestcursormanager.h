@@ -14,6 +14,7 @@ public:
     Display *getDisplay() { return dpy; }
 
     void moveCursorTo(int x, int y);
+    void moveRelative (int x, int y);
     void click(MouseButton b);
     void updateCursor();
 
